@@ -1,0 +1,1 @@
+mv gitignore .gitignore
