@@ -24,7 +24,7 @@ def get_vote(update, context):
     # update inline buttons
     i_buttons = [
         [InlineKeyboardButton(text='{} ➖ {}'.format(option.title, option.count), callback_data=str(option.id))]
-        for option in poll_obj.options.all()
+        for option in poll_obj.options.filter().order_by('pk')
     ]
     markup =  InlineKeyboardMarkup(i_buttons)
     bot_edit_message_reply_markup(update, context, reply_markup=markup)

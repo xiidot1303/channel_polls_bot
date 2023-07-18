@@ -113,7 +113,7 @@ def confirm_poll(update, context):
         # send poll to channel
         i_buttons = [
             [InlineKeyboardButton(text=option.title, callback_data=str(option.id))]
-            for option in poll_obj.options.all()
+            for option in poll_obj.options.filter().order_by('pk')
         ]
         markup =  InlineKeyboardMarkup(i_buttons)
         newsletter = send_newsletter(
