@@ -3,7 +3,7 @@ from telegram import ChatMember
 
 def to_the_channels_list(update, context):
     channels = list(channels_all().values_list('title', flat=True))
-    keyboards = [[get_word('main menu', update), get_word('add channel', update)]] + [channels]
+    keyboards = [[get_word('main menu', update), get_word('add channel', update)]] + [[channel] for channel in channels]
     markup = reply_keyboard_markup(keyboards)
     update_message_reply_text(update, get_word('select channel', update), reply_markup=markup)
     return GET_CHANNEL_ACTION
