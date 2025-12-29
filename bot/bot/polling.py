@@ -39,7 +39,8 @@ def get_vote(update: Update, context: ContextTypes):
     if sponsor_channels:
         send_sponsored_channels_list(update, context)
     else:
-        text += "\n\nSizning homiy kanallaringiz yo'q."
+        return _to_the_captcha(update, context)
+
 
 
 def send_sponsored_channels_list(update: Update, context: ContextTypes):
