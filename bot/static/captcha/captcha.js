@@ -1,3 +1,5 @@
+webApp = Telegram.WebApp;
+webApp.expand();
 const bg = document.getElementById("bg");
 const piece = document.getElementById("piece");
 const slider = document.getElementById("slider");
