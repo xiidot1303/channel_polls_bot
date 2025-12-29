@@ -7,7 +7,7 @@ def _to_the_captcha(update: Update, context):
     # get option obj by id
     option_obj = get_option_by_id(int(option_id))
     poll_obj = option_obj.poll
-    text = f"Siz dan rostdan ham <b>{poll_obj.title}</b> so'rovnomasi bo'yicha <code>{option_obj.title}</code> ga ovoz bermoqchimisiz?"
+    text = f"Siz rostdan ham <b>{poll_obj.title}</b> so'rovnomasi bo'yicha <code>{option_obj.title}</code> ga ovoz bermoqchimisiz?"
     markup = ReplyKeyboardMarkup(
         [
             [KeyboardButton(text="Ovoz berishni tasdiqlash",
