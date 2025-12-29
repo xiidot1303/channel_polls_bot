@@ -10,10 +10,14 @@ from telegram import (
     ReplyKeyboardRemove,
     Bot,
     ParseMode,
-    ChatAction
+    ChatAction,
+    Update,
+    WebAppInfo,
+    ChatMember
 )
 from telegram.ext import (
-    ConversationHandler
+    ConversationHandler,
+    ContextTypes
 )
 from uuid import uuid4
 from config import BOT_API_TOKEN
@@ -184,3 +188,14 @@ def send_media_group(bot, chat_id, photos):
         bot.send_media_group(chat_id = chat_id, media = all)
     except:
         w=0
+
+def bot_create_invite_link(context, channel_id):
+    bot = context.bot
+    bot: Bot
+    chat_id = channel_id
+    try:
+        invite_link = bot.create_chat_invite_link(chat_id)
+        return invite_link.invite_link
+    except Exception as e:
+        print(e)
+        return None

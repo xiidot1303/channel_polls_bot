@@ -112,7 +112,8 @@ def confirm_poll(update, context):
             )
         # send poll to channel
         i_buttons = [
-            [InlineKeyboardButton(text=option.title, callback_data=str(option.id))]
+            [InlineKeyboardButton(text=f"{option.count} {option.title}", 
+                                  url=f"https://t.me/{context.bot.get_me().username}?start=vote_{option.id}")]
             for option in poll_obj.options.filter().order_by('pk')
         ]
         markup =  InlineKeyboardMarkup(i_buttons)
@@ -123,6 +124,8 @@ def confirm_poll(update, context):
             poll_obj.photo,
             reply_markup=markup
         )
+        poll_obj.msg_id = newsletter.message_id
+        poll_obj.save()
         if newsletter:
             text = get_word('poll uploaded successfully', update)
             bot_send_message(update, context, text)

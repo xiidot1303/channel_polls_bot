@@ -10,3 +10,13 @@ def channel_info_string(update, channel):
         get_word('poll actions', update),
     )
     return text
+
+def sponsor_channel_info_string(update, channel):
+    text = 'ℹ️ <b>{}</b>\n\n<b>{}</b>: {}\n<b>{}</b>: {}'.format(
+        get_word('channel info', update),
+        get_word('id', update),
+        channel.channel_id,
+        get_word('title', update),
+        channel.title
+    )
+    return text

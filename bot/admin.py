@@ -6,6 +6,9 @@ from django.urls import reverse
 class ChannelAdmin(admin.ModelAdmin):
     list_display = ['channel_id', 'title']
 
+class SponsorChannelAdmin(admin.ModelAdmin):
+    list_display = ['channel_id', 'title']
+
 class PollAdmin(admin.ModelAdmin):
     list_display = ['channel', 'title', 'photo']
 
@@ -81,4 +84,5 @@ class MesageAdmin(admin.ModelAdmin):
 admin.site.register(Bot_user, Bot_userAdmin)
 # admin.site.register(Message, MesageAdmin)
 admin.site.register(Channel, ChannelAdmin)
+admin.site.register(SponsorChannel, SponsorChannelAdmin)
 admin.site.register(Poll, PollAdmin)

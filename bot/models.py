@@ -80,6 +80,19 @@ class Poll(models.Model):
     text = models.TextField(null=True, blank=True, max_length=4096, verbose_name='Текст')
     options = models.ManyToManyField(Option, verbose_name='Варианты')
     voters = models.ManyToManyField(Vote, verbose_name='Избиратели')
+    msg_id = models.CharField(null=True, blank=True, max_length=32)
     class Meta:
         verbose_name = "Опрос"
         verbose_name_plural = "Опросы"
+
+
+class SponsorChannel(models.Model):
+    title = models.CharField(null=True, blank=True, max_length=255, verbose_name='Название')
+    channel_id = models.BigIntegerField(null=True, blank=False, verbose_name='ID')
+    invite_link = models.CharField(null=True, blank=True, max_length=255, verbose_name='Пригласительная ссылка')
+
+    class Meta:
+        verbose_name = "Спонсорский канал"
+        verbose_name_plural = "Спонсорские каналы"
+
+    

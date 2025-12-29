@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Captcha</title>
+  <link rel="stylesheet" href="{% static 'captcha/style.css' %}">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+<div class="captcha-container">
+  <div class="captcha-header">
+    Xavfsizlik tekshiruvini yakunlang
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas id="bg"></canvas>
+    <canvas id="piece"></canvas>
+  </div>
+
+  <div class="slider-wrapper">
+    <span class="slider-text">To'ldirish uchun o'ngga suring</span>
+    <input type="range" id="slider">
+  </div>
+</div>
+
+
+<script src="{% static 'captcha/captcha.js' %}"></script>
+</body>
+</html>

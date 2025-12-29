@@ -15,7 +15,7 @@ from telegram.ext import (
 from bot.resources.strings import lang_dict
 from bot.resources.conversationList import *
 from bot.bot import (
-    main, login, settings, channels, polls, polling
+    main, login, settings, channels, polls, polling, sponsor_channels
 )
 
 start_handler = CommandHandler("start", main.start)
@@ -65,10 +65,37 @@ channels_handler = ConversationHandler(
     persistent=True
 )
 
-polling_handler = CallbackQueryHandler(polling.get_vote)
+
+
+sponsor_channels_handler = ConversationHandler(
+    entry_points=[MessageHandler(Filters.text(lang_dict['sponsor channels']), main.sponsor_channels)],
+    states={
+        GET_CHANNEL_ACTION: [
+            MessageHandler(Filters.text(lang_dict['add channel']), sponsor_channels.add_channel),
+            MessageHandler(Filters.text, sponsor_channels.select_channel),
+            ],
+        GET_CHANNEL_ID: [
+            MessageHandler(Filters.text, sponsor_channels.get_channel_id),
+            ],
+        GET_POLL_ACTION_OR_DELETE_CHANNEL: [
+            MessageHandler(Filters.text(lang_dict['back']), sponsor_channels.to_the_sponsor_channels_list),
+
+            ]
+    },
+    fallbacks=[],
+    name='sponsor channels',
+    persistent=True
+)
+
+
+
+subscribed_handler = CallbackQueryHandler(polling.send_sponsored_channels_list, pattern="subscribed")
+web_app_data_handler = MessageHandler(Filters.status_update.web_app_data, callback=polling.verified_captcha)
 
 handlers = [
-    polling_handler,
     start_handler,
     channels_handler,
+    sponsor_channels_handler,
+    subscribed_handler,
+    web_app_data_handler
 ]

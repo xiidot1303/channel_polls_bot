@@ -1,8 +1,8 @@
 from bot.bot import *
 from telegram import ChatMember
 
-def to_the_channels_list(update, context):
-    channels = list(channels_all().values_list('title', flat=True))
+def to_the_sponsor_channels_list(update, context):
+    channels = list(sponsor_channels_all().values_list('title', flat=True))
     keyboards = [[get_word('main menu', update), get_word('add channel', update)]] + [[channel] for channel in channels]
     markup = reply_keyboard_markup(keyboards)
     update_message_reply_text(update, get_word('select channel', update), reply_markup=markup)
@@ -16,11 +16,8 @@ def _to_the_adding_channel(update, context):
 
 def to_the_channel_info(update, context):
     channel = context.user_data['channel']
-    text = channel_info_string(update, channel)
-    polls = list(channel.polls.values_list('title', flat=True))
-    polls = [[poll] for poll in polls]
-    keyboards = [[get_word('back', update), get_word('add poll', update)]]
-    keyboards.extend(polls)
+    text = sponsor_channel_info_string(update, channel)
+    keyboards = [[get_word('back', update)]]
     markup = reply_keyboard_markup(keyboards)
     update_message_reply_text(update, text, markup)
     return GET_POLL_ACTION_OR_DELETE_CHANNEL
@@ -28,7 +25,7 @@ def to_the_channel_info(update, context):
 @is_start
 def select_channel(update, context):
     message_text = update.message.text
-    channel = get_channel_by_title(message_text)
+    channel = get_sponsor_channel_by_title(message_text)
     if channel:
         # set channel to user data
         context.user_data['channel'] = channel
@@ -37,6 +34,7 @@ def select_channel(update, context):
         text = get_word('select followed channels', update)
         update_message_reply_text(update, text)
         return
+    
 @is_start
 def add_channel(update, context):
     return _to_the_adding_channel(update, context)
@@ -49,7 +47,7 @@ def get_channel_id(update, context):
     if update.message.forward_from_chat:
         channel_id = update.message.forward_from_chat.id
     elif update.message.text == get_word('back', update):
-        return to_the_channels_list(update, context)
+        return to_the_sponsor_channels_list(update, context)
     else:
         channel_id = update.message.text
 
@@ -68,7 +66,8 @@ def get_channel_id(update, context):
         if chat_member.status in [ChatMember.CREATOR, ChatMember.ADMINISTRATOR]:
             channel = chat
             # create channel obj
-            create_channel(channel.title, channel.id)
+            invite_link = bot_create_invite_link(context, channel.id)
+            create_sponsor_channel(channel.title, channel.id, invite_link=invite_link)
             text = get_word('channel added successfully', update)
             update_message_reply_text(update, text)
         else:
@@ -81,4 +80,4 @@ def get_channel_id(update, context):
         update_message_reply_text(update, text)
         return
 
-    return to_the_channels_list(update, context)
+    return to_the_sponsor_channels_list(update, context)

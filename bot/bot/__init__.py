@@ -6,6 +6,7 @@ from bot.services import *
 from bot.services.language_service import *
 from bot.services.string_service import *
 from bot.services.channel_service import *
+from bot.services.sponsor_channel_service import *
 from bot.services.poll_service import *
 from bot.resources.conversationList import *
 
@@ -19,6 +20,7 @@ def main_menu(update, context):
     bot = context.bot
     keyboard = [
         [get_word('channels', update)],
+        [get_word('sponsor channels', update)],
     ]
 
     reply_markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True)
@@ -152,15 +154,11 @@ def ignore_start(func):
 def check_user_access(func):
     def func_arguments(*args, **kwargs):
         bot = args[1].bot
-        try:
-            lalal = args[0].message.text
-            update = args[0]
-            data = ""
-        except:
-            update = args[0].callback_query
-            data = update.data
-        id = update.message.chat.id
-        if is_user_allowed(id):
+        update: Update = args[0]
+        
+        id = update.effective_user.id
+        message_text = update.effective_message.text
+        if is_user_allowed(id) or message_text != '/start':
             return func(*args, **kwargs)
         else:
             update_message_reply_text(update, 'Sorry, you do not have permission to use the bot')

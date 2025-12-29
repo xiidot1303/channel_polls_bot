@@ -56,6 +56,8 @@ lang_dict = {
 
     "channels": ["Kanallar 📢", "Каналы 📢"],
 
+    "sponsor channels": ["Homiy kanallar 💼", "Спонсорские каналы 💼"],
+
     "add channel": ["➕ Kanal qo'shish", "➕ Добавить канал"],
 
     "select channel": ["Quyidagi kanallardan birini tanlang", ""],
