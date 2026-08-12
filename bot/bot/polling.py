@@ -35,7 +35,7 @@ def get_vote(update: Update, context: ContextTypes):
         return
 
     text = "😊 Assalom alaykum.\nSo'rovnoma botga xush kelibsiz!"
-    sponsor_channels = sponsor_channels_all()
+    sponsor_channels = poll_obj.sponsor_channels.all()
     if sponsor_channels:
         send_sponsored_channels_list(update, context)
     else:
@@ -46,8 +46,12 @@ def get_vote(update: Update, context: ContextTypes):
 def send_sponsored_channels_list(update: Update, context: ContextTypes):
     if update.callback_query:
         update.effective_message.delete()
+    option_id = context.user_data.get('option_id')
+    # get option obj by id
+    option_obj = get_option_by_id(int(option_id))
+    poll_obj = option_obj.poll
     unsubscribed_channels = unsubscribed_channels_of_user(
-        context, update.effective_user.id)
+        context, update.effective_user.id, poll_obj)
     channels_count = len(unsubscribed_channels)
     if channels_count > 0:
         text = f"❕ Iltimos, so'rovnomada ishtirok etishingiz uchun quyidagi {channels_count} ta kanlaga a'zo bo'ling"

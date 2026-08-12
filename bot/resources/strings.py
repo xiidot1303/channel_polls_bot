@@ -121,6 +121,17 @@ lang_dict = {
         ""
         ],
 
+    "select sponsor channels": [
+        "Ushbu so'rovnoma uchun homiy kanallarni tanlang.",
+        ""
+    ],
+
+    "": ["", ""],
+
+    "": ["", ""],
+
+    "": ["", ""],
+
     "": ["", ""],
 
 }

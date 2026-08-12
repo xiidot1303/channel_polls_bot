@@ -1,10 +1,10 @@
 from app.services import *
-from bot.models import Poll, Option
+from bot.models import Poll, Option, SponsorChannel
 
 def check_poll_title(channel, title):
     return Poll.objects.filter(title=title, channel__id=channel.id)
 
-def create_poll(channel, title, photo, text, options):
+def create_poll(channel, title, photo, text, options, sponsor_channels_ids):
     poll_obj = Poll.objects.create(
         channel = channel,
         title = title,
@@ -13,6 +13,9 @@ def create_poll(channel, title, photo, text, options):
     )
     for option in options:
         poll_obj.options.create(title=option)
+    if sponsor_channels_ids:
+        sponsor_channels = SponsorChannel.objects.filter(id__in=sponsor_channels_ids)
+        poll_obj.sponsor_channels.set(sponsor_channels)
     poll_obj.save()
     return poll_obj
 

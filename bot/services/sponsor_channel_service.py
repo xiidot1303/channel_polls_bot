@@ -25,9 +25,9 @@ def delete_sponsor_channel(id):
     channel.delete()
 
 
-def unsubscribed_channels_of_user(context: ContextTypes, user_id):
+def unsubscribed_channels_of_user(context: ContextTypes, user_id, poll_obj):
     bot: Bot = context.bot
-    sponsor_channels = sponsor_channels_all()
+    sponsor_channels = poll_obj.sponsor_channels.all()
     result = []
     for channel in sponsor_channels:
         chat_member = bot.get_chat_member(chat_id=channel.channel_id, user_id=user_id)

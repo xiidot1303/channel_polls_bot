@@ -55,6 +55,11 @@ channels_handler = ConversationHandler(
             MessageHandler(Filters.text(lang_dict['back']), polls._to_the_getting_poll_text),
             MessageHandler(Filters.text, polls.get_poll_options),
         ],
+        SELECT_POLL_SPONSOR_CHANNELS: [
+            CallbackQueryHandler(polls.select_poll_sponsor_channel, pattern="select-sponsor-channel-"),
+            CallbackQueryHandler(polls._to_the_getting_poll_options, pattern="back"),
+            CallbackQueryHandler(polls._to_the_confirming_poll, pattern="next"),
+        ],
         CONFIRM_POLL: [
             MessageHandler(Filters.text(lang_dict['back']), polls._to_the_getting_poll_options),
             MessageHandler(Filters.text, polls.confirm_poll),

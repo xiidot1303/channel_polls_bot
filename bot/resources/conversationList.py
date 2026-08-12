@@ -1,4 +1,4 @@
-n = 16
+n = 17
 (
     SELECT_LANG,
     GET_NAME,
@@ -15,7 +15,6 @@ n = 16
     GET_POLL_PHOTO,
     GET_POLL_TEXT,
     GET_POLL_OPTIONS,
+    SELECT_POLL_SPONSOR_CHANNELS,
     CONFIRM_POLL,
-
-    
 ) = range(0, n)
