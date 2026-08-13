@@ -10,7 +10,13 @@ class SponsorChannelAdmin(admin.ModelAdmin):
     list_display = ['channel_id', 'title']
 
 class PollAdmin(admin.ModelAdmin):
-    list_display = ['channel', 'title', 'photo']
+    list_display = ['title', 'channel', 'photo']
+
+    fieldsets = (
+        ('', {
+            'fields': ['channel', 'title', 'photo', 'text', 'sponsor_channels'],
+        }),
+    )
 
 class Bot_userAdmin(admin.ModelAdmin):
     def get_list_display(self, request):

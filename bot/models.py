@@ -47,6 +47,12 @@ class Channel(models.Model):
         query = Poll.objects.filter(channel__id = self.id)
         return query
 
+    def __str__(self) -> str:
+        try:
+            return self.title
+        except:
+            return super().__str__()
+
     class Meta:
         verbose_name = "Канал"
         verbose_name_plural = "Каналы"
@@ -91,6 +97,12 @@ class SponsorChannel(models.Model):
     title = models.CharField(null=True, blank=True, max_length=255, verbose_name='Название')
     channel_id = models.BigIntegerField(null=True, blank=False, verbose_name='ID')
     invite_link = models.CharField(null=True, blank=True, max_length=255, verbose_name='Пригласительная ссылка')
+
+    def __str__(self) -> str:
+        try:
+            return self.title
+        except:
+            return super().__str__()
 
     class Meta:
         verbose_name = "Спонсорский канал"
